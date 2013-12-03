@@ -1,0 +1,14 @@
+# IDEA
+.idea/workspace.xml
+.idea/misc.xml
+.idea/vcs.xml
+
+# Java
+classes
+*.class
+
+# Gradle
+.gradle
+
+# Build output
+build
