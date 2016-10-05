@@ -55,6 +55,7 @@ public class ConsumeInputAndInterpretCommandsTest {
 
         public void consume(Scanner scanner) {
             while (scanner.hasNextLine()) {
+                // REFACTOR This looks like a little command interpreter. Separate?
                 barcodeScannedCommand.onBarcode(scanner.nextLine());
             }
         }
