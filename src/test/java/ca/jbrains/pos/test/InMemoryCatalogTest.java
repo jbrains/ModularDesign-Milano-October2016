@@ -7,24 +7,10 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryCatalogTest {
-    @Test
-    public void productFound() throws Exception {
-        final Price foundPrice = Price.cents(795);
+public class InMemoryCatalogTest extends CatalogContract {
 
-        Assert.assertEquals(
-                foundPrice,
-                catalogWith("::known product::", foundPrice).findPrice("::known product::"));
-    }
-
-    @Test
-    public void productNotFound() throws Exception {
-        Assert.assertEquals(
-                null,
-                catalogWithout("::unknown product::").findPrice("::unknown product::"));
-    }
-
-    private Catalog catalogWithout(String barcodeToAvoid) {
+    @Override
+    protected Catalog catalogWithout(String barcodeToAvoid) {
         return new InMemoryCatalog(new HashMap<String, Price>() {{
             put(String.format("Not %s", barcodeToAvoid), Price.cents(1));
             put(String.format("Absolutely not %s", barcodeToAvoid), Price.cents(2));
@@ -32,7 +18,8 @@ public class InMemoryCatalogTest {
         }});
     }
 
-    private Catalog catalogWith(final String barcode, final Price foundPrice) {
+    @Override
+    protected Catalog catalogWith(final String barcode, final Price foundPrice) {
         return new InMemoryCatalog(new HashMap<String, Price>() {{
             put(barcode, foundPrice);
         }});
