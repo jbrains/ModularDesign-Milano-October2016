@@ -26,6 +26,22 @@ public class ConsumeInputAndInterpretCommandsTest {
                         "::I interpret this line as a barcode::" + System.lineSeparator()));
     }
 
+    @Test
+    public void severalLines() throws Exception {
+        context.checking(new Expectations() {{
+            oneOf(barcodeScannedCommand).onBarcode("::I interpret this 1st line as a barcode::");
+            oneOf(barcodeScannedCommand).onBarcode("::I interpret this 2nd line as a barcode::");
+            oneOf(barcodeScannedCommand).onBarcode("::I interpret this 3rd line as a barcode::");
+        }});
+
+        new CommandExecuterAndInterpreter(barcodeScannedCommand).consume(
+                new Scanner(
+                        "::I interpret this 1st line as a barcode::" + System.lineSeparator() +
+                                "::I interpret this 2nd line as a barcode::" + System.lineSeparator() +
+                                "::I interpret this 3rd line as a barcode::" + System.lineSeparator()
+                ));
+    }
+
     public interface BarcodeScannedCommand {
         void onBarcode(String barcode);
     }
@@ -38,7 +54,9 @@ public class ConsumeInputAndInterpretCommandsTest {
         }
 
         public void consume(Scanner scanner) {
-            barcodeScannedCommand.onBarcode(scanner.nextLine());
+            while (scanner.hasNextLine()) {
+                barcodeScannedCommand.onBarcode(scanner.nextLine());
+            }
         }
     }
 }
