@@ -20,6 +20,11 @@ public class PointOfSaleTerminal {
                             public void displayProductNotFoundMessage(String barcodeNotFound) {
                                 System.out.println(String.format("Product not found for %s", barcodeNotFound));
                             }
+
+                            @Override
+                            public void displayTotal(Price total) {
+                                throw new UnsupportedOperationException("Not yet implemented.");
+                            }
                         }
                 )
         ).consume(new Scanner(System.in));
