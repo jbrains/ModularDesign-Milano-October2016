@@ -12,17 +12,19 @@ public class InMemoryCatalogTest {
     public void productFound() throws Exception {
         final Price foundPrice = Price.cents(795);
 
-        Assert.assertEquals(foundPrice, catalogWith("::known product::", foundPrice).findPrice("::known product::"));
+        Assert.assertEquals(
+                foundPrice,
+                catalogWith("::known product::", foundPrice).findPrice("::known product::"));
     }
 
     @Test
     public void productNotFound() throws Exception {
-        final InMemoryCatalog catalog = catalogWithout("::unknown product::");
-
-        Assert.assertEquals(null, catalog.findPrice("::unknown product::"));
+        Assert.assertEquals(
+                null,
+                catalogWithout("::unknown product::").findPrice("::unknown product::"));
     }
 
-    private InMemoryCatalog catalogWithout(String barcodeToAvoid) {
+    private Catalog catalogWithout(String barcodeToAvoid) {
         return new InMemoryCatalog(new HashMap<String, Price>() {{
             put(String.format("Not %s", barcodeToAvoid), Price.cents(1));
             put(String.format("Absolutely not %s", barcodeToAvoid), Price.cents(2));
@@ -30,7 +32,7 @@ public class InMemoryCatalogTest {
         }});
     }
 
-    private InMemoryCatalog catalogWith(final String barcode, final Price foundPrice) {
+    private Catalog catalogWith(final String barcode, final Price foundPrice) {
         return new InMemoryCatalog(new HashMap<String, Price>() {{
             put(barcode, foundPrice);
         }});
