@@ -26,6 +26,8 @@ public class CheckoutControllerTest {
             allowing(shopcart).getTotal();
             will(returnValue(shopcartTotal));
 
+            // SMELL Two expectations in the same test!
+            // What does this mean?
             oneOf(display).displayTotal(shopcartTotal);
             oneOf(shopcart).empty();
         }});
