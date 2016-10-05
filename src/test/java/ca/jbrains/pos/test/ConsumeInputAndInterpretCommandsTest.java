@@ -1,5 +1,7 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.BarcodeScannedCommand;
+import ca.jbrains.pos.CommandExecuterAndInterpreter;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -42,22 +44,4 @@ public class ConsumeInputAndInterpretCommandsTest {
                 ));
     }
 
-    public interface BarcodeScannedCommand {
-        void onBarcode(String barcode);
-    }
-
-    private static class CommandExecuterAndInterpreter {
-        private final BarcodeScannedCommand barcodeScannedCommand;
-
-        public CommandExecuterAndInterpreter(BarcodeScannedCommand barcodeScannedCommand) {
-            this.barcodeScannedCommand = barcodeScannedCommand;
-        }
-
-        public void consume(Scanner scanner) {
-            while (scanner.hasNextLine()) {
-                // REFACTOR This looks like a little command interpreter. Separate?
-                barcodeScannedCommand.onBarcode(scanner.nextLine());
-            }
-        }
-    }
 }
