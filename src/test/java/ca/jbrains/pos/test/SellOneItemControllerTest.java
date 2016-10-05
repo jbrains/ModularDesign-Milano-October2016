@@ -19,7 +19,7 @@ public class SellOneItemControllerTest {
     @Test
     public void productFound() throws Exception {
         final Price foundPrice = Price.cents(580);
-        
+
         context.checking(new Expectations() {{
             allowing(catalog).findPrice(with("::irrelevant barcode::"));
             will(returnValue(foundPrice));
@@ -40,10 +40,6 @@ public class SellOneItemControllerTest {
         }});
 
         new SellOneItemController(catalog, display).onBarcode("::irrelevant barcode::");
-    }
-
-    public interface Catalog {
-        Price findPrice(String barcode);
     }
 
     public interface Display {
@@ -70,9 +66,4 @@ public class SellOneItemControllerTest {
         }
     }
 
-    public static class Price {
-        public static Price cents(int priceInCents) {
-            return new Price();
-        }
-    }
 }
