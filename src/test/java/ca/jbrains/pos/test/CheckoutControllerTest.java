@@ -2,6 +2,7 @@ package ca.jbrains.pos.test;
 
 import ca.jbrains.pos.Display;
 import ca.jbrains.pos.Price;
+import ca.jbrains.pos.Shopcart;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -41,12 +42,6 @@ public class CheckoutControllerTest {
         // Asking to check out without any products in the
         // shopcart is like running a program that doesn't
         // compile. :)
-    }
-
-    public interface Shopcart {
-        Price getTotal();
-
-        void empty();
     }
 
     public static class CheckoutController {

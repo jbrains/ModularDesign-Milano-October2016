@@ -10,7 +10,22 @@ public class PointOfSaleTerminal {
                         new InMemoryCatalog(new HashMap<String, Price>() {{
                             put("50375370", Price.cents(150));
                         }}),
-                        new Display() {
+                        new Shopcart() {
+                            @Override
+                            public Price getTotal() {
+                                throw new UnsupportedOperationException("Not yet implemented.");
+                            }
+
+                            @Override
+                            public void empty() {
+                                throw new UnsupportedOperationException("Not yet implemented.");
+                            }
+
+                            @Override
+                            public void addProduct(Price price) {
+                                throw new UnsupportedOperationException("Not yet implemented.");
+                            }
+                        }, new Display() {
                             @Override
                             public void displayPrice(Price price) {
                                 System.out.println(price.toString());
