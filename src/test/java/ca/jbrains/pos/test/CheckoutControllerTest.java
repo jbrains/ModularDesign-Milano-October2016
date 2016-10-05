@@ -27,15 +27,26 @@ public class CheckoutControllerTest {
             will(returnValue(shopcartTotal));
 
             oneOf(display).displayTotal(shopcartTotal);
+            oneOf(shopcart).empty();
         }});
 
         new CheckoutController(shopcart, display).onCheckout();
     }
 
+    @Test
+    public void purchaseNotInProgress() throws Exception {
+        // This is a UI problem, so don't solve it here!!
+        // Asking to check out without any products in the
+        // shopcart is like running a program that doesn't
+        // compile. :)
+    }
+
     public interface Shopcart {
         Price getTotal();
+
+        void empty();
     }
-    
+
     public static class CheckoutController {
         private final Shopcart shopcart;
         private final Display display;
@@ -47,6 +58,7 @@ public class CheckoutControllerTest {
 
         public void onCheckout() {
             display.displayTotal(shopcart.getTotal());
+            shopcart.empty();
         }
     }
 }
