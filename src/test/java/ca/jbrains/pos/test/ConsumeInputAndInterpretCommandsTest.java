@@ -24,7 +24,7 @@ public class ConsumeInputAndInterpretCommandsTest {
     @Test
     public void oneLine() throws Exception {
         context.checking(new Expectations() {{
-            oneOf(barcodeScannedCommand).onBarcode("::I interpret this line as a barcode::");
+            ignoring(barcodeScannedCommand);
             oneOf(interpretTextCommand).interpretCommand("::I interpret this line as a barcode::");
         }});
 
@@ -36,11 +36,9 @@ public class ConsumeInputAndInterpretCommandsTest {
     @Test
     public void severalLines() throws Exception {
         context.checking(new Expectations() {{
-            oneOf(barcodeScannedCommand).onBarcode("::I interpret this 1st line as a barcode::");
+            ignoring(barcodeScannedCommand);
             oneOf(interpretTextCommand).interpretCommand("::I interpret this 1st line as a barcode::");
-            oneOf(barcodeScannedCommand).onBarcode("::I interpret this 2nd line as a barcode::");
             oneOf(interpretTextCommand).interpretCommand("::I interpret this 2nd line as a barcode::");
-            oneOf(barcodeScannedCommand).onBarcode("::I interpret this 3rd line as a barcode::");
             oneOf(interpretTextCommand).interpretCommand("::I interpret this 3rd line as a barcode::");
         }});
 
