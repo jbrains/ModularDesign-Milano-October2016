@@ -44,18 +44,4 @@ public class CheckoutControllerTest {
         // compile. :)
     }
 
-    public static class CheckoutController {
-        private final Shopcart shopcart;
-        private final Display display;
-
-        public CheckoutController(Shopcart shopcart, Display display) {
-            this.shopcart = shopcart;
-            this.display = display;
-        }
-
-        public void onCheckout() {
-            display.displayTotal(shopcart.getTotal());
-            shopcart.empty();
-        }
-    }
 }
