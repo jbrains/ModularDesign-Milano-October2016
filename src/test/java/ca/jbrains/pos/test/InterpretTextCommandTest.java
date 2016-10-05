@@ -1,5 +1,6 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.InterpretTextCommand;
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
 import org.jmock.integration.junit4.JUnitRuleMockery;
@@ -22,7 +23,7 @@ public class InterpretTextCommandTest {
             oneOf(checkoutCommand).execute("T");
         }});
 
-        new TextCommandInterpreter(checkoutCommand, null).interpretCommand("T");
+        new PointOfSaleTextCommandInterpreter(checkoutCommand, null).interpretCommand("T");
     }
 
     @Test
@@ -31,24 +32,25 @@ public class InterpretTextCommandTest {
             oneOf(scannedBarcodeCommand).execute("::any other command::");
         }});
 
-        new TextCommandInterpreter(null, scannedBarcodeCommand).interpretCommand("::any other command::");
+        new PointOfSaleTextCommandInterpreter(null, scannedBarcodeCommand).interpretCommand("::any other command::");
     }
 
     public interface TextCommand {
         void execute(String commandText);
     }
 
-    private static class TextCommandInterpreter {
+    private static class PointOfSaleTextCommandInterpreter implements InterpretTextCommand {
         private final TextCommand checkoutCommand;
         private final TextCommand scannedBarcodeCommand;
 
         // SMELL It will be easy to get all these commands wrong! We need stronger typing?
         // REFACTOR Maybe we need some kind of command language description?! (I'm thinking too far ahead!)
-        public TextCommandInterpreter(TextCommand checkoutCommand, TextCommand scannedBarcodeCommand) {
+        public PointOfSaleTextCommandInterpreter(TextCommand checkoutCommand, TextCommand scannedBarcodeCommand) {
             this.checkoutCommand = checkoutCommand;
             this.scannedBarcodeCommand = scannedBarcodeCommand;
         }
 
+        @Override
         public void interpretCommand(String commandText) {
             // SMELL parse command and execute command are in one place. Hm.
             if ("T".equals(commandText))
