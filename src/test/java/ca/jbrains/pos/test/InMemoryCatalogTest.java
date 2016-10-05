@@ -12,7 +12,7 @@ public class InMemoryCatalogTest {
     public void productFound() throws Exception {
         final Price foundPrice = Price.cents(795);
 
-        Assert.assertEquals(foundPrice, catalogWith("12345", foundPrice).findPrice("12345"));
+        Assert.assertEquals(foundPrice, catalogWith("::known product::", foundPrice).findPrice("::known product::"));
     }
 
     @Test
