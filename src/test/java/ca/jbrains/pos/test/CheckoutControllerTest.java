@@ -1,5 +1,6 @@
 package ca.jbrains.pos.test;
 
+import ca.jbrains.pos.CheckoutController;
 import ca.jbrains.pos.Display;
 import ca.jbrains.pos.Price;
 import ca.jbrains.pos.Shopcart;

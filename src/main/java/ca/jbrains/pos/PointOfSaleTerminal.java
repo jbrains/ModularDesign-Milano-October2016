@@ -4,43 +4,51 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class PointOfSaleTerminal {
+
     public static void main(String[] args) {
-        new CommandExecuterAndInterpreter(
-                new SellOneItemController(
-                        new InMemoryCatalog(new HashMap<String, Price>() {{
-                            put("50375370", Price.cents(150));
-                        }}),
-                        new Shopcart() {
-                            @Override
-                            public Price getTotal() {
-                                throw new UnsupportedOperationException("Not yet implemented.");
-                            }
+        final Shopcart shopcart = new Shopcart() {
+            @Override
+            public Price getTotal() {
+                throw new UnsupportedOperationException("Not yet implemented.");
+            }
 
-                            @Override
-                            public void empty() {
-                                throw new UnsupportedOperationException("Not yet implemented.");
-                            }
+            @Override
+            public void empty() {
+                throw new UnsupportedOperationException("Not yet implemented.");
+            }
 
-                            @Override
-                            public void addProduct(Price price) {
-                                throw new UnsupportedOperationException("Not yet implemented.");
-                            }
-                        }, new Display() {
-                            @Override
-                            public void displayPrice(Price price) {
-                                System.out.println(price.toString());
-                            }
+            @Override
+            public void addProduct(Price price) {
+                throw new UnsupportedOperationException("Not yet implemented.");
+            }
+        };
 
-                            @Override
-                            public void displayProductNotFoundMessage(String barcodeNotFound) {
-                                System.out.println(String.format("Product not found for %s", barcodeNotFound));
-                            }
+        final Catalog catalog = new InMemoryCatalog(new HashMap<String, Price>() {{
+            put("50375370", Price.cents(150));
+        }});
 
-                            @Override
-                            public void displayTotal(Price total) {
-                                throw new UnsupportedOperationException("Not yet implemented.");
-                            }
-                        }
+        final Display display = new Display() {
+            @Override
+            public void displayPrice(Price price) {
+                System.out.printf("%s", price);
+            }
+
+            @Override
+            public void displayProductNotFoundMessage(String barcodeNotFound) {
+                System.out.printf("Product not found for %s", barcodeNotFound);
+
+            }
+
+            @Override
+            public void displayTotal(Price total) {
+                System.out.printf("Total: %s", total);
+            }
+        };
+
+        new ConsumeTextCommands(
+                new PointOfSaleTextCommandInterpreter(
+                        (command) -> { new CheckoutController(shopcart, display).onCheckout(); },
+                        (command) -> { new SellOneItemController(catalog, shopcart, display).onBarcode(command); }
                 )
         ).consume(new Scanner(System.in));
     }

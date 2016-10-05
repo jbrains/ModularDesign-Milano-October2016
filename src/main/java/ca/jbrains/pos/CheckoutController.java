@@ -1,4 +1,4 @@
-package ca.jbrains.pos.test;
+package ca.jbrains.pos;
 
 import ca.jbrains.pos.Display;
 import ca.jbrains.pos.Shopcart;
