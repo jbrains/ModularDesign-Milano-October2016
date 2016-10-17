@@ -32,7 +32,7 @@ public class SellOneItemControllerTest {
             oneOf(shopcart).addProduct(with(foundPrice));
         }});
 
-        new SellOneItemController(catalog, shopcart, display).onBarcode("::irrelevant barcode::");
+        new BarcodeScannedController(catalog, shopcart, display).onBarcode("::irrelevant barcode::");
     }
 
     @Test
@@ -44,7 +44,7 @@ public class SellOneItemControllerTest {
             oneOf(display).displayProductNotFoundMessage(with("::irrelevant barcode::"));
         }});
 
-        new SellOneItemController(catalog, shopcart, display).onBarcode("::irrelevant barcode::");
+        new BarcodeScannedController(catalog, shopcart, display).onBarcode("::irrelevant barcode::");
     }
 
 }

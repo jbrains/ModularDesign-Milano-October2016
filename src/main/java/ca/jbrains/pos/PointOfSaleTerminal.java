@@ -48,7 +48,7 @@ public class PointOfSaleTerminal {
         new ConsumeTextCommands(
                 new PointOfSaleTextCommandInterpreter(
                         (command) -> { new CheckoutController(shopcart, display).onCheckout(); },
-                        (command) -> { new SellOneItemController(catalog, shopcart, display).onBarcode(command); }
+                        (command) -> { new BarcodeScannedController(catalog, shopcart, display).onBarcode(command); }
                 )
         ).consume(new Scanner(System.in));
     }
